@@ -1,39 +1,39 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Minimum Duration
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+A simple utility function used to force an operation to take _at least_ a given amount of time.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+This is most often useful to ensure that some "loading" animation is displayed at least long enough to be seen by the user, even if the loading operation completes very quickly.
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+This is a super simple implementation, but it helps me avoid writing the same code over and over in every app, and I hope it helps you too!
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Just install the package.
+
+```sh
+dart/flutter pub add minimum_duration
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Easy! Wrap your logic in a call to `minimumDuration`.
 
 ```dart
-const like = 'sample';
+setLoading(true);
+
+final result = await minimumDuration(
+  () async => someAsyncOperation(),
+);
+
+setLoading(false);
 ```
 
-## Additional information
+The default Duration is 250ms, but can easily be overridden by providing a `duration` parameter.
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+```dart
+final result = await minimumDuration(
+  () async => someAsyncOperation(),
+  duration: const Duration(seconds: 1),
+);
+```

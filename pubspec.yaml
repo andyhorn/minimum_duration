@@ -1,7 +1,7 @@
 name: minimum_duration
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: A minimum duration utility for Dart.
+version: 0.0.1
+repository: https://github.com/andyhorn/minimum_duration
 
 environment:
   sdk: ^3.1.3
