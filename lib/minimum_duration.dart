@@ -1,8 +1,3 @@
-/// Support for doing something awesome.
-///
-/// More dartdocs go here.
-library;
+library minimum_duration;
 
-export 'src/minimum_duration_base.dart';
-
-// TODO: Export any libraries intended for clients of this package.
+export 'src/minimum_duration.dart';
