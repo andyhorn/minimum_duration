@@ -17,23 +17,48 @@ dart/flutter pub add minimum_duration
 
 ## Usage
 
-Easy! Wrap your logic in a call to `minimumDuration`.
+### Basic Usage
+
+Using MinimumDuration is easy! Simply pass a function to `MinimumDuration.run`.
 
 ```dart
 setLoading(true);
 
-final result = await minimumDuration(
+final result = await MinimumDuration.run(
   () async => someAsyncOperation(),
 );
 
 setLoading(false);
 ```
 
-The default Duration is 250ms, but can easily be overridden by providing a `duration` parameter.
+In this example, the return value from `someAsyncOperation` will be assigned to `result` after _at least_ 500ms (the default duration) has elapsed.
+
+If your function takes longer than the specified duration, it will be returned immediately upon completion.
+
+### Custom Duration
+
+The default Duration is **500ms**, but this can easily be overridden by providing a value to the `duration` parameter.
 
 ```dart
-final result = await minimumDuration(
+final result = await MinimumDuration.run(
   () async => someAsyncOperation(),
   duration: const Duration(seconds: 1),
 );
 ```
+
+### Global Default Duration
+
+The default can also be set globally by changing the `MinimumDuration.duration` property.
+
+```dart
+// somewhere in your app's initialization code
+MinimumDuration.duration = const Duration(seconds: 1);
+
+// later, in your app's logic
+// this will run for the "default" duration of 1 second
+final result = await MinimumDuration.run(
+  () async => someAsyncOperation(),
+);
+```
+
+This is useful if the default does not fit your use-case and you don't want to pass a custom duration to every call to `MinimumDuration.run`.
