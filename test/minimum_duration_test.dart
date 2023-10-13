@@ -2,26 +2,56 @@ import 'package:minimum_duration/minimum_duration.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('$minimumDuration', () {
-    test('lasts the default duration', () async {
-      final start = DateTime.now();
-      final result = await minimumDuration(() => 'hello');
-      final end = DateTime.now();
+  group(MinimumDuration, () {
+    group('implicit (default) duration', () {
+      test('it runs for the correct duration', () async {
+        final start = DateTime.now();
+        final result = await MinimumDuration.run(() => 'hello');
+        final end = DateTime.now();
 
-      expect(result, equals('hello'));
-      expect(end.difference(start).inMilliseconds, greaterThanOrEqualTo(250));
+        expect(result, equals('hello'));
+        expect(
+          end.difference(start),
+          greaterThanOrEqualTo(MinimumDuration.duration),
+        );
+      });
     });
 
-    test('lasts the custom duration', () async {
-      final start = DateTime.now();
-      final result = await minimumDuration(
-        () => 'hello',
-        duration: const Duration(seconds: 1),
-      );
-      final end = DateTime.now();
+    group('explicit duration', () {
+      test('it runs for the specified duration', () async {
+        final start = DateTime.now();
+        final result = await MinimumDuration.run(
+          () => 'hello',
+          duration: const Duration(seconds: 1),
+        );
+        final end = DateTime.now();
 
-      expect(result, equals('hello'));
-      expect(end.difference(start).inMilliseconds, greaterThanOrEqualTo(1000));
+        expect(result, equals('hello'));
+        expect(
+          end.difference(start).inMilliseconds,
+          greaterThanOrEqualTo(1000),
+        );
+      });
+    });
+
+    group('configured duration', () {
+      const duration = Duration(seconds: 2);
+
+      setUpAll(() {
+        MinimumDuration.duration = duration;
+      });
+
+      test('it runs the specified duration', () async {
+        final start = DateTime.now();
+        final result = await MinimumDuration.run(() => 'hello');
+        final end = DateTime.now();
+
+        expect(result, equals('hello'));
+        expect(
+          end.difference(start).inMilliseconds,
+          greaterThanOrEqualTo(duration.inMilliseconds),
+        );
+      });
     });
   });
 }

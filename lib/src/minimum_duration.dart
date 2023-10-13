@@ -1,17 +1,27 @@
 import 'dart:async';
 
-Future<T> minimumDuration<T>(
-  FutureOr<T> Function() callback, {
-  Duration duration = const Duration(milliseconds: 250),
-}) async {
-  final start = DateTime.now();
-  final result = await callback();
-  final end = DateTime.now();
-  final elapsed = end.difference(start);
+class MinimumDuration {
+  static const _defaultDuration = Duration(milliseconds: 500);
+  static Duration duration = _defaultDuration;
 
-  if (elapsed < duration) {
-    await Future.delayed(duration - elapsed);
+  static void reset() {
+    duration = _defaultDuration;
   }
 
-  return result;
+  static Future<T> run<T>(
+    FutureOr<T> Function() callback, {
+    Duration? duration,
+  }) async {
+    final target = duration ?? MinimumDuration.duration;
+    final start = DateTime.now();
+    final result = await callback();
+    final end = DateTime.now();
+    final elapsed = end.difference(start);
+
+    if (elapsed < target) {
+      await Future.delayed(target - elapsed);
+    }
+
+    return result;
+  }
 }
