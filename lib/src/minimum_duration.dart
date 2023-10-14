@@ -1,6 +1,8 @@
 import 'dart:async';
 
-class MinimumDuration {
+final class MinimumDuration {
+  const MinimumDuration._();
+
   static const _defaultDuration = Duration(milliseconds: 500);
   static Duration duration = _defaultDuration;
 

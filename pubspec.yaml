@@ -1,6 +1,6 @@
 name: minimum_duration
 description: A minimum duration utility for Dart.
-version: 0.0.2
+version: 0.0.3
 repository: https://github.com/andyhorn/minimum_duration
 
 environment:
