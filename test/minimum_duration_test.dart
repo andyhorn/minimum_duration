@@ -41,6 +41,10 @@ void main() {
         MinimumDuration.duration = duration;
       });
 
+      tearDownAll(() {
+        MinimumDuration.reset();
+      });
+
       test('it runs the specified duration', () async {
         final start = DateTime.now();
         final result = await MinimumDuration.run(() => 'hello');
