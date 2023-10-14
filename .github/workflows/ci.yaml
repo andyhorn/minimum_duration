@@ -8,7 +8,7 @@ on:
 jobs:
   analyze:
     name: Analyze and Test
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: dart-lang/setup-dart@v1
